@@ -128,15 +128,18 @@ function updateOptions(inst, multiple, propValue) {
   } else {
     // Do not set `select.value` as exact behavior isn't consistent across all
     // browsers for all cases.
+    var valueNotFound = true;
     selectedValue = '' + propValue;
     for (i = 0; i < options.length; i++) {
       if (options[i].value === selectedValue) {
-        options[i].selected = true;
-        return;
+        options[i].setAttribute("selected", "");
+        valueNotFound = false;
+      } else {
+        options[i].removeAttribute("selected");
       }
     }
-    if (options.length) {
-      options[0].selected = true;
+    if (valueNotFound && options.length) {
+      options[0].setAttribute("selected", "");
     }
   }
 }
